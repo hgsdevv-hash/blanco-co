@@ -44,7 +44,7 @@
   }, { passive: true });
 
   /* Entradas por seção, em cascata */
-  $$('.letter__col > *, .services__list > h2, .services__intro, .svc li, .slip-sec__text > *, .slip, .space__text > *, .ba, .space__strip img, .contact > *, .foot__menu nav a')
+  $$('.letter__col > *, .services__list > h2, .services__intro, .svc li, .work__head > *, .slip-sec__text > *, .slip, .space__text > *, .ba, .space__strip img, .contact > *, .foot__menu nav a')
     .forEach(el => el.classList.add('rv'));
   const groups = new Map();
   $$('.rv').forEach(el => {
@@ -58,31 +58,50 @@
   }), { rootMargin: '0px 0px -10% 0px' });
   $$('.rv').forEach(el => io.observe(el));
 
-  /* Scroll: nome do hero pesa, costura dos cortes rasga */
+  /* Nome do hero pesa ao rolar */
   const word = $('.hero__word');
-  const seams = $$('[data-seam]');
-  const tick = () => {
-    const vh = innerHeight;
-    if (!reduce) {
-      const p = Math.min(scrollY / vh, 1);
-      word.style.transform = `scale(${1 - p * 0.07})`;
-      seams.forEach(s => {
-        const r = s.getBoundingClientRect();
-        if (r.bottom < 0 || r.top > vh) return;
-        // 0 quando o projeto está centrado; -1 entrando, +1 saindo
-        const t = Math.max(-1, Math.min(1, (-r.top - (r.height - vh) / 2) / (r.height / 2)));
-        const st = s.style;
-        st.setProperty('--pl', (-t * 10) + 'svh');
-        st.setProperty('--pr', (t * 10) + 'svh');
-        st.setProperty('--tl', (-t * 30) + 'svh');
-        st.setProperty('--tr', (t * 30) + 'svh');
-      });
-    }
+  const tick = () => { if (!reduce) word.style.transform = `scale(${1 - Math.min(scrollY / innerHeight, 1) * 0.07})`; };
+  addEventListener('scroll', () => requestAnimationFrame(tick), { passive: true });
+
+  /* Cortes: filtro e foto ampliada */
+  const items = $$('.gal__item');
+  $$('.chip').forEach(ch => ch.addEventListener('click', () => {
+    $$('.chip').forEach(c => c.setAttribute('aria-pressed', String(c === ch)));
+    const f = ch.dataset.f;
+    items.forEach(it => {
+      const on = f === 'all' || it.dataset.tag === f;
+      if (on) { it.hidden = false; requestAnimationFrame(() => it.classList.remove('is-out')); }
+      else { it.classList.add('is-out'); setTimeout(() => { if (it.classList.contains('is-out')) it.hidden = true; }, 250); }
+    });
+  }));
+  const lb = $('#lb'), lbImg = $('#lbImg');
+  let cur = 0;
+  const visible = () => items.filter(it => !it.classList.contains('is-out'));
+  const show = i => {
+    const list = visible();
+    cur = (i + list.length) % list.length;
+    const img = list[cur].querySelector('img');
+    lbImg.src = img.src; lbImg.alt = img.alt;
+    $('#lbName').textContent = list[cur].querySelector('.gal__cap').textContent;
+    $('#lbDesc').textContent = img.alt;
   };
-  let raf = 0;
-  addEventListener('scroll', () => { if (!raf) raf = requestAnimationFrame(() => { raf = 0; tick(); }); }, { passive: true });
-  addEventListener('resize', tick);
-  tick();
+  items.forEach(it => it.querySelector('.gal__btn').addEventListener('click', () => {
+    show(visible().indexOf(it));
+    lb.showModal();
+  }));
+  $('.lb__prev').addEventListener('click', () => show(cur - 1));
+  $('.lb__next').addEventListener('click', () => show(cur + 1));
+  $('.lb__close').addEventListener('click', () => lb.close());
+  lb.addEventListener('click', e => { if (e.target === lb) lb.close(); });
+  lb.addEventListener('keydown', e => { if (e.key === 'ArrowLeft') show(cur - 1); if (e.key === 'ArrowRight') show(cur + 1); });
+  let x0 = null;
+  lb.addEventListener('touchstart', e => { x0 = e.touches[0].clientX; }, { passive: true });
+  lb.addEventListener('touchend', e => {
+    if (x0 === null) return;
+    const dx = e.changedTouches[0].clientX - x0;
+    if (Math.abs(dx) > 40) show(cur + (dx < 0 ? 1 : -1));
+    x0 = null;
+  });
 
   /* Serviços: linha ativa troca a foto; toque soma tempo e valor */
   const img = $('#servImg');

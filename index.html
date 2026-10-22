@@ -85,51 +85,50 @@
     <div class="letter__col">
       <img class="letter__face" src="img/barbeiro2.webp" width="88" height="88" alt="Felipe Blanco no salão">
       <h2 id="letter-h" class="letter__h">Uma pausa, não uma fila</h2>
-      <p>Eu montei a Blanco &amp; Co. do zero, de parede no reboco até a última planta no canto. Cada caixa aberta naquele salão foi uma oração atendida.</p>
-      <p>Aqui é <mark>um cliente de cada vez</mark>. Você chega no seu horário, senta, e a próxima meia hora é sua. Sem pressa, sem barulho, sem fila de espera.</p>
-      <p>Teve erro, teve aprendizado e teve acerto. Cada corte me ensina alguma coisa, e eu levo isso para o próximo.</p>
-      <p>Dedico este trabalho à glória de Deus. Seja bem-vindo.</p>
+      <p>A Blanco &amp; Co. nasceu para oferecer um atendimento de barbearia feito com calma e precisão, em um espaço pensado para o seu conforto.</p>
+      <p>O atendimento é <mark>um cliente de cada vez</mark>, sempre com hora marcada. Você chega, senta e o tempo é todo seu: sem espera e sem pressa.</p>
+      <p>Cada corte começa com uma conversa sobre o que você quer e termina com o acabamento revisado no espelho. Técnica atualizada, ferramentas higienizadas e atenção aos detalhes.</p>
+      <p>Seja bem-vindo.</p>
       <p class="letter__sign">Felipe Blanco</p>
       <p class="letter__role">Barbeiro e fundador</p>
     </div>
   </section>
 
-  <!-- CORTES: título rasgado na costura -->
+  <!-- CORTES: galeria com filtro -->
   <section class="work" id="cortes" aria-labelledby="work-h">
-    <h2 id="work-h" class="work__h">Cortes recentes</h2>
-    <article class="seam" data-seam>
-      <div class="seam__stage">
-        <img class="seam__l" src="img/corte1.webp" width="720" height="900" alt="Degradê com barba alinhada, visto de perfil" loading="lazy">
-        <img class="seam__r" src="img/corte3.webp" width="720" height="960" alt="Degradê baixo visto de frente, cliente de capa branca" loading="lazy">
-        <h3 class="seam__t"><span class="seam__a">Degradê</span><span class="seam__b" aria-hidden="true">Degradê</span></h3>
-        <p class="seam__meta">Lateral zerada, topo com volume</p>
+    <div class="work__head">
+      <h2 id="work-h">Cortes recentes</h2>
+      <div class="chips" role="group" aria-label="Filtrar cortes">
+        <button type="button" class="chip" aria-pressed="true" data-f="all">Todos</button>
+        <button type="button" class="chip" aria-pressed="false" data-f="degrade">Degradê</button>
+        <button type="button" class="chip" aria-pressed="false" data-f="lowfade">Low fade</button>
+        <button type="button" class="chip" aria-pressed="false" data-f="social">Social</button>
+        <button type="button" class="chip" aria-pressed="false" data-f="longo">Corte longo</button>
       </div>
-    </article>
-    <article class="seam" data-seam>
-      <div class="seam__stage">
-        <img class="seam__l" src="img/corte4.webp" width="720" height="960" alt="Nuca com acabamento limpo, cliente de capa listrada" loading="lazy">
-        <img class="seam__r" src="img/corte5.webp" width="720" height="960" alt="Corte com franja texturizada, visto de trás" loading="lazy">
-        <h3 class="seam__t"><span class="seam__a">Social</span><span class="seam__b" aria-hidden="true">Social</span></h3>
-        <p class="seam__meta">Tesoura, risca e acabamento na nuca</p>
-      </div>
-    </article>
-    <article class="seam" data-seam>
-      <div class="seam__stage">
-        <img class="seam__l" src="img/corte6.webp" width="720" height="960" alt="Cabelo penteado com risca e laterais baixas" loading="lazy">
-        <img class="seam__r" src="img/corte7.webp" width="720" height="960" alt="Corte crespo com contorno marcado" loading="lazy">
-        <h3 class="seam__t"><span class="seam__a">Low fade</span><span class="seam__b" aria-hidden="true">Low fade</span></h3>
-        <p class="seam__meta">Degradê baixo com contorno marcado</p>
-      </div>
-    </article>
-    <article class="seam" data-seam>
-      <div class="seam__stage">
-        <img class="seam__l" src="img/corte2.webp" width="720" height="900" alt="Corte com textura no topo, visto de lado" loading="lazy">
-        <img class="seam__r" src="img/corte9.webp" width="1200" height="1600" alt="Cabelo longo e liso, finalizado" loading="lazy">
-        <h3 class="seam__t"><span class="seam__a">Corte longo</span><span class="seam__b" aria-hidden="true">Corte longo</span></h3>
-        <p class="seam__meta">Do curto ao longo</p>
-      </div>
-    </article>
+    </div>
+    <ul class="gal" id="gal">
+      <li class="gal__item" data-tag="degrade"><button type="button" class="gal__btn"><img src="img/corte3.webp" width="600" height="800" alt="Degradê médio com topo texturizado" loading="lazy"><span class="gal__cap">Degradê</span></button></li>
+      <li class="gal__item" data-tag="degrade"><button type="button" class="gal__btn"><img src="img/corte1.webp" width="600" height="800" alt="Degradê com barba alinhada" loading="lazy"><span class="gal__cap">Degradê</span></button></li>
+      <li class="gal__item" data-tag="lowfade"><button type="button" class="gal__btn"><img src="img/corte6.webp" width="600" height="800" alt="Low fade com risca lateral" loading="lazy"><span class="gal__cap">Low fade</span></button></li>
+      <li class="gal__item" data-tag="lowfade"><button type="button" class="gal__btn"><img src="img/corte7.webp" width="600" height="800" alt="Low fade em cabelo crespo, contorno marcado" loading="lazy"><span class="gal__cap">Low fade</span></button></li>
+      <li class="gal__item" data-tag="social"><button type="button" class="gal__btn"><img src="img/corte4.webp" width="600" height="800" alt="Social com nuca limpa" loading="lazy"><span class="gal__cap">Social</span></button></li>
+      <li class="gal__item" data-tag="social"><button type="button" class="gal__btn"><img src="img/corte8.webp" width="600" height="800" alt="Social penteado para trás" loading="lazy"><span class="gal__cap">Social</span></button></li>
+      <li class="gal__item" data-tag="lowfade"><button type="button" class="gal__btn"><img src="img/corte5.webp" width="600" height="800" alt="Low fade com franja" loading="lazy"><span class="gal__cap">Low fade</span></button></li>
+      <li class="gal__item" data-tag="social"><button type="button" class="gal__btn"><img src="img/corte2.webp" width="600" height="800" alt="Social com textura no topo" loading="lazy"><span class="gal__cap">Social</span></button></li>
+      <li class="gal__item" data-tag="longo"><button type="button" class="gal__btn"><img src="img/corte9.webp" width="600" height="800" alt="Corte em cabelo longo e liso" loading="lazy"><span class="gal__cap">Corte longo</span></button></li>
+    </ul>
   </section>
+
+  <dialog class="lb" id="lb" aria-label="Foto do corte">
+    <img id="lbImg" src="img/corte3.webp" alt="">
+    <div class="lb__bar">
+      <p><strong id="lbName"></strong><span id="lbDesc"></span></p>
+      <a class="btn" href="https://l.appbarber.com.br/gwzugrjb" target="_blank" rel="noopener">Quero esse corte</a>
+    </div>
+    <button type="button" class="lb__nav lb__prev" aria-label="Foto anterior">&lsaquo;</button>
+    <button type="button" class="lb__nav lb__next" aria-label="Próxima foto">&rsaquo;</button>
+    <button type="button" class="lb__close" aria-label="Fechar">&times;</button>
+  </dialog>
 
   <!-- SERVIÇOS: lista ativa + montar a pausa -->
   <section class="services" id="servicos" aria-labelledby="serv-h">
