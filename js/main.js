@@ -44,7 +44,7 @@
   }, { passive: true });
 
   /* Entradas por seção, em cascata */
-  $$('.letter__col > *, .services__list > h2, .services__intro, .svc li, .work__head > *, .slip-sec__text > *, .slip, .space__text > *, .ba, .space__strip img, .contact > *, .foot__menu nav a')
+  $$('.letter__col > *, .services__list > h2, .services__intro, .svc li, .work__head > *, .look__card, .slip-sec__text > *, .slip, .space__text > *, .ba, .space__strip img, .contact > *, .foot__menu nav a')
     .forEach(el => el.classList.add('rv'));
   const groups = new Map();
   $$('.rv').forEach(el => {
@@ -63,45 +63,47 @@
   const tick = () => { if (!reduce) word.style.transform = `scale(${1 - Math.min(scrollY / innerHeight, 1) * 0.07})`; };
   addEventListener('scroll', () => requestAnimationFrame(tick), { passive: true });
 
-  /* Cortes: filtro e foto ampliada */
-  const items = $$('.gal__item');
-  $$('.chip').forEach(ch => ch.addEventListener('click', () => {
-    $$('.chip').forEach(c => c.setAttribute('aria-pressed', String(c === ch)));
-    const f = ch.dataset.f;
-    items.forEach(it => {
-      const on = f === 'all' || it.dataset.tag === f;
-      if (on) { it.hidden = false; requestAnimationFrame(() => it.classList.remove('is-out')); }
-      else { it.classList.add('is-out'); setTimeout(() => { if (it.classList.contains('is-out')) it.hidden = true; }, 250); }
-    });
-  }));
-  const lb = $('#lb'), lbImg = $('#lbImg');
-  let cur = 0;
-  const visible = () => items.filter(it => !it.classList.contains('is-out'));
-  const show = i => {
-    const list = visible();
-    cur = (i + list.length) % list.length;
-    const img = list[cur].querySelector('img');
-    lbImg.src = img.src; lbImg.alt = img.alt;
-    $('#lbName').textContent = list[cur].querySelector('.gal__cap').textContent;
-    $('#lbDesc').textContent = img.alt;
+  /* Cortes: carrossel com setas, arrastar e barra de progresso */
+  const look = $('#look'), bar = $('#lookBar');
+  const arrows = $$('.look__arrow');
+  const step = () => look.querySelector('.look__card').offsetWidth + 16;
+  const sync = () => {
+    const max = look.scrollWidth - look.clientWidth;
+    const p = max > 0 ? look.scrollLeft / max : 0;
+    const w = look.clientWidth / look.scrollWidth;
+    bar.style.width = (w * 100) + '%';
+    bar.style.transform = `translateX(${p * (1 / w - 1) * 100}%)`;
+    arrows[0].disabled = look.scrollLeft < 4;
+    arrows[1].disabled = look.scrollLeft > max - 4;
   };
-  items.forEach(it => it.querySelector('.gal__btn').addEventListener('click', () => {
-    show(visible().indexOf(it));
-    lb.showModal();
-  }));
-  $('.lb__prev').addEventListener('click', () => show(cur - 1));
-  $('.lb__next').addEventListener('click', () => show(cur + 1));
-  $('.lb__close').addEventListener('click', () => lb.close());
-  lb.addEventListener('click', e => { if (e.target === lb) lb.close(); });
-  lb.addEventListener('keydown', e => { if (e.key === 'ArrowLeft') show(cur - 1); if (e.key === 'ArrowRight') show(cur + 1); });
-  let x0 = null;
-  lb.addEventListener('touchstart', e => { x0 = e.touches[0].clientX; }, { passive: true });
-  lb.addEventListener('touchend', e => {
-    if (x0 === null) return;
-    const dx = e.changedTouches[0].clientX - x0;
-    if (Math.abs(dx) > 40) show(cur + (dx < 0 ? 1 : -1));
-    x0 = null;
+  arrows.forEach(b => b.addEventListener('click', () => look.scrollBy({ left: step() * +b.dataset.dir, behavior: reduce ? 'auto' : 'smooth' })));
+  look.addEventListener('scroll', () => requestAnimationFrame(sync), { passive: true });
+  look.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight') { e.preventDefault(); arrows[1].click(); }
+    if (e.key === 'ArrowLeft') { e.preventDefault(); arrows[0].click(); }
   });
+  // arrastar com o mouse (no toque o navegador já faz)
+  let dragX = null, startLeft = 0;
+  look.addEventListener('pointerdown', e => {
+    if (e.pointerType !== 'mouse') return;
+    dragX = e.clientX; startLeft = look.scrollLeft;
+  });
+  addEventListener('pointermove', e => {
+    if (dragX === null) return;
+    if (Math.abs(e.clientX - dragX) > 4) look.classList.add('is-drag');
+    look.scrollLeft = startLeft - (e.clientX - dragX);
+  });
+  addEventListener('pointerup', () => {
+    if (dragX === null) return;
+    dragX = null;
+    if (!look.classList.contains('is-drag')) return;
+    const left = look.scrollLeft;
+    look.classList.remove('is-drag');
+    look.scrollLeft = left;
+    look.scrollTo({ left: Math.round(left / step()) * step(), behavior: 'smooth' });
+  });
+  addEventListener('resize', sync);
+  sync();
 
   /* Serviços: linha ativa troca a foto; toque soma tempo e valor */
   const img = $('#servImg');
