@@ -272,3 +272,10 @@ body:not(.is-loading) .hero__photo img{transform:scale(1)}
 .hero__tag a:hover{text-decoration:underline}
 @media (max-width:1024px){.reviews{display:block}.reviews__score{position:static;margin-bottom:40px}}
 @media (max-width:760px){.reviews{padding:88px 16px}.quotes{grid-template-columns:1fr}.quote:first-child{grid-column:auto}.quote{padding:24px}}
+
+/* ---------- WhatsApp ---------- */
+.wa{position:fixed;right:20px;bottom:20px;z-index:30;width:60px;height:60px;border-radius:50%;display:grid;place-items:center;background:#25d366;color:#fff;box-shadow:0 6px 20px rgba(0,0,0,.25);transition:transform .2s var(--ease-out)} /* taste-skill-ignore: botão flutuante */
+.wa:active{transform:scale(.94)}
+@media (hover:hover){.wa:hover{transform:scale(1.06)}}
+body.is-loading .wa{opacity:0}
+@media (max-width:760px){.wa{right:16px;bottom:16px;width:56px;height:56px}}

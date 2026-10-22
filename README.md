@@ -13,8 +13,6 @@ Interativo: título dos cortes rasga na costura ao rolar; "Monte sua pausa" soma
 - Texto da carta (escrito a partir das legendas dele)
 - Serviços, durações e **preços** (todos de exemplo)
 
-- Horário: todos os dias? (site diz 7h–21h)
-- WhatsApp, link do Google Business
 - Autorização de imagem dos clientes que aparecem nas fotos (LGPD)
-- Google Maps diz que fecha às 19h e endereço em Americana; site diz 7h–21h e Santa Bárbara d'Oeste
+- Horário, cidade e telefone seguem o Google Maps (out/2026)
 - Avaliações: nota 5,0 (37) consultada em out/2026; trocar "Avaliar" pelo link curto oficial do Perfil da Empresa
