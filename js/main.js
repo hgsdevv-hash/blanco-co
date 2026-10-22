@@ -44,7 +44,7 @@
   }, { passive: true });
 
   /* Entradas por seção, em cascata */
-  $$('.letter__col > *, .services__list > h2, .services__intro, .svc li, .work__head > *, .look__card, .slip-sec__text > *, .slip, .space__text > *, .ba, .space__strip img, .contact > *, .foot__menu nav a')
+  $$('.letter__col > *, .services__list > h2, .services__intro, .svc li, .work__head > *, .reviews__score > *, .quote, .look__card, .slip-sec__text > *, .slip, .space__text > *, .ba, .space__strip img, .contact > *, .foot__menu nav a')
     .forEach(el => el.classList.add('rv'));
   const groups = new Map();
   $$('.rv').forEach(el => {
